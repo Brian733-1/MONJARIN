@@ -1,170 +1,132 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aguarde um momento...</title>
-    <style>
-        /* Estilos Globais */
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            overflow: hidden; /* Impede rolagem enquanto o modal está ativo */
-        }
-
-        /* Iframe da Página de Vendas (Fundo) */
-        #background-page {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-            z-index: 1;
-            filter: blur(5px); /* Efeito de desfoque opcional para dar foco ao modal */
-            pointer-events: none; /* Impede cliques na página de fundo antes de aceitar */
-        }
-
-        /* Overlay de fundo (Escurece levemente a página de vendas) */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4); /* Transparência preta suave */
-            z-index: 2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Modal Estilo Cookies */
-        .cookie-modal {
-            background: #ffffff;
-            width: 90%;
-            max-width: 450px;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            text-align: center;
-            animation: fadeIn 0.5s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .cookie-modal h2 {
-            margin-top: 0;
-            font-size: 20px;
-            color: #333;
-            font-weight: 700;
-        }
-
-        .cookie-modal p {
-            font-size: 15px;
-            color: #666;
-            line-height: 1.5;
-            margin-bottom: 25px;
-        }
-
-        /* Botões */
-        .btn-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .btn-primary {
-            background-color: #000000;
-            color: #ffffff;
-            border: none;
-            padding: 15px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            background-color: #333333;
-        }
-
-        .btn-secondary {
-            background-color: #e0e0e0;
-            color: #333;
-            border: none;
-            padding: 15px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        /* Link de Política (discreto) */
-        .footer-link {
-            display: block;
-            margin-top: 15px;
-            font-size: 12px;
-            color: #0066cc;
-            text-decoration: none;
-        }
-
-        /* Responsividade para Mobile */
-        @media (max-width: 480px) {
-            .cookie-modal {
-                padding: 20px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cookie Consent</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+ 
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: #f5f0f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+ 
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    backdrop-filter: blur(3px);
+  }
+ 
+  .popup {
+    background: #fff;
+    border-radius: 24px;
+    padding: 32px 28px 28px;
+    max-width: 360px;
+    width: 92%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(200, 40, 120, 0.18), 0 4px 20px rgba(0,0,0,0.1);
+    animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    position: relative;
+  }
+ 
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.85) translateY(20px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+ 
+  h2 {
+    font-size: 18px;
+    font-weight: 800;
+    color: #1a1a2e;
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+ 
+  p {
+    font-size: 13.5px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 22px;
+  }
+ 
+  .btn-accept {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    border-radius: 50px;
+    border: none;
+    background: linear-gradient(135deg, #e8196e, #c0125a);
+    color: #fff;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 6px 24px rgba(220,25,110,0.4);
+    animation: btnPulse 2s ease-in-out infinite;
+  }
+ 
+  @keyframes btnPulse {
+    0%   { box-shadow: 0 6px 24px rgba(220,25,110,0.4); }
+    50%  { box-shadow: 0 6px 36px rgba(220,25,110,0.65); }
+    100% { box-shadow: 0 6px 24px rgba(220,25,110,0.4); }
+  }
+ 
+  .btn-accept:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 10px 32px rgba(220,25,110,0.55);
+  }
+ 
+  .btn-accept:active {
+    transform: scale(0.98);
+  }
+ 
+  .privacy-link {
+    display: block;
+    margin-top: 14px;
+    font-size: 12px;
+    color: #aaa;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+ 
+  .privacy-link:hover { color: #e8196e; }
+</style>
 </head>
 <body>
-
-    <!-- COLOQUE O LINK DA SUA PÁGINA DE VENDAS NO 'src' ABAIXO -->
-    <iframe id="background-page" src="COLOQUE_SUA_PAGINA_DE_VENDAS_AQUI"></iframe>
-
-    <div class="overlay" id="cookie-overlay">
-        <div class="cookie-modal">
-            <h2>Configurações de cookies</h2>
-            <p>
-                Nós usamos cookies e tecnologias semelhantes para personalizar conteúdo, medir anúncios e proporcionar uma experiência melhor. 
-                Ao clicar em 'Aceitar', você concorda com isso, conforme descrito em nossa 
-                <a href="#" class="footer-link" style="display:inline;">Política de Cookies</a>.
-            </p>
-
-            <div class="btn-container">
-                <!-- Ao clicar, o modal some e a página de vendas fica liberada -->
-                <button onclick="aceitarCookies()" class="btn-primary">Aceitar</button>
-                <button onclick="aceitarCookies()" class="btn-secondary">Recusar</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function aceitarCookies() {
-            // Remove o modal e o fundo escuro
-            document.getElementById('cookie-overlay').style.display = 'none';
-            
-            // Remove o desfoque da página de fundo
-            const bg = document.getElementById('background-page');
-            bg.style.filter = 'none';
-            bg.style.pointerEvents = 'auto'; // Libera cliques na página de vendas
-            
-            // Permite rolagem na página
-            document.body.style.overflow = 'auto';
-
-            // OPCIONAL: Se você quiser redirecionar em vez de apenas liberar a página, use:
-            // window.location.href = "SEU_LINK_DE_VENDAS_AQUI";
-        }
-    </script>
-
+ 
+<div class="overlay" id="overlay">
+  <div class="popup">
+ 
+    <h2>Configurações de Cookies</h2>
+    <p>Para uma melhor experiência e acesso às ofertas exclusivas, aceite nossos termos de uso e cookies.</p>
+ 
+    <a
+      href="https://monjarim.top/?pv=prodq26k&af=afi11lnqyo"
+      class="btn-accept"
+      id="acceptBtn"
+    >
+      Aceitar e Continuar
+    </a>
+ 
+    <a href="https://monjarim.top/?pv=prodq26k&af=afi11lnqyo" class="privacy-link">Política de Privacidade</a>
+ 
+  </div>
+</div>
+ 
 </body>
 </html>
